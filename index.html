@@ -37,6 +37,30 @@
     .start-btn{margin-top:10px;background:linear-gradient(90deg,#1e90ff,#48b0ff);border:none;color:#021324;padding:12px 20px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform .3s}
     .start-btn:hover{transform:scale(1.05)}
 
+    /* === Search Bar === */
+    .search-container {
+      width: 100%;
+      text-align: center;
+      margin: 25px 0 15px;
+    }
+    #searchInput {
+      width: 80%;
+      max-width: 420px;
+      padding: 12px 18px;
+      border: 2px solid #1e90ff;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      background: rgba(255,255,255,0.08);
+      color: #e8f0ff;
+      transition: 0.3s;
+    }
+    #searchInput::placeholder {color:#9fb3d6;}
+    #searchInput:focus {
+      border-color: #48b0ff;
+      box-shadow: 0 0 8px rgba(72,176,255,0.4);
+    }
+
     .game-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
     .card{background:rgba(255,255,255,0.03);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
     .card:hover{transform:translateY(-5px);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
@@ -64,6 +88,61 @@
       .logo-box{width:48px;height:48px}
       footer{left:12px;transform:none}
     }
+  
+/* === Pop-up Notification Style === */
+.popup-notif {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.25);
+  padding: 25px 35px;
+  text-align: center;
+  width: 300px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+}
+.popup-notif.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+.popup-notif .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #777;
+}
+.popup-notif h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #333;
+}
+.popup-notif p {
+  font-size: 14px;
+  color: #555;
+  margin: 10px 0 15px;
+}
+.popup-notif a.download-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.popup-notif a.download-btn:hover {
+  background: #0056b3;
+}
   </style>
 </head>
 <body>
@@ -90,22 +169,40 @@
     <section id="home" class="active">
       <div class="hero">
         <h1>Selamat datang di <strong>NANOXVERS</strong></h1>
-        <p>Platform sederhana untuk berbagi Game PPSSPP, MOD, DLL. Pilih game favoritmu dan unduh lewat MediaFire atau shortlink " Link Shorlink Untuk Bantu Support Saya Jika Kesulitan Download Lah Yang Mediafire TERIMAKASIH.</p>
+        <p>Platform sederhana untuk berbagi Game PPSSPP, MOD, DLL. Pilih game favoritmu dan unduh lewat MediaFire atau shortlink.</p>
         <button class="start-btn" id="startBtn">MULAI</button>
       </div>
     </section>
 
     <section id="game">
       <h2>GAME</h2>
+
+      <!-- 🔍 Search Bar -->
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Cari game di sini..." />
+      </div>
+
       <div class="game-grid" id="gameGrid">
-        <article class="card">
+        <article class="card game-item">
           <img src="https://imgur.com/skhVjx1.png?text=Game+1" alt="NO 1">
           <div class="card-body">
-            <h3>Coming Soon</h3>
-            <p style="color:#9fb3d6">Coming Soo </p>
+            <h3>Free Fire</h3>
+            <p style="color:#9fb3d6">Battle Royale populer.</p>
             <div class="links">
               <a class="mediafire" href="https://www.mediafire.com/" target="_blank" rel="noopener">MediaFire</a>
               <a class="shortlink" href="https://shorlink.example/" target="_blank" rel="noopener">Shortlink</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card game-item">
+          <img src="https://imgur.com/skhVjx1.png?text=Game+2" alt="NO 2">
+          <div class="card-body">
+            <h3>Mobile Legends</h3>
+            <p style="color:#9fb3d6">MOBA klasik 5v5.</p>
+            <div class="links">
+              <a class="mediafire" href="#" target="_blank" rel="noopener">MediaFire</a>
+              <a class="shortlink" href="#" target="_blank" rel="noopener">Shortlink</a>
             </div>
           </div>
         </article>
@@ -114,7 +211,8 @@
 
     <section id="about">
       <h2>Tentang NANOXVERS</h2>
-      <p style="color:#9fb3d6">NANOXVERS dibuat sebagai tempat berbagi game ppsspp, ps1/ps2, dan game mod lainya.</p>
+      <p style="color:#9fb3d6">NANOXVERS dibuat sebagai tempat berbagi game PPSSPP, PS1/PS2, dan game MOD lainnya.  
+      !UPDATE SETIAP BIKIN KONTEN!</p>
     </section>
 
     <section id="join">
@@ -124,24 +222,11 @@
         <input type="text" placeholder="Nama Kamu - Opsional" required>
         <input type="email" placeholder="Email - Opsional" required>
         <a href="https://whatsapp.com/channel/0029VbC57GxJ3jusdhlwM436" target="_blank" class="start-btn">
-  Gabung Sekarang
-</a>
-
+          Gabung Sekarang
+        </a>
       </form>
     </section>
   </main>
-
-  <div class="wave-wrap" aria-hidden>
-    <svg class="wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="g1" x1="0" x2="1">
-          <stop offset="0" stop-color="#001428" stop-opacity="1" />
-          <stop offset="1" stop-color="#002a4a" stop-opacity="1" />
-        </linearGradient>
-      </defs>
-      <path fill="url(#g1)" fill-opacity="1" d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,138.7C672,117,768,107,864,101.3C960,96,1056,96,1152,122.7C1248,149,1344,203,1392,229.3L1440,256L1440,320L0,320Z"></path>
-    </svg>
-  </div>
 
   <footer>
     <a href="#" data-page="home" class="nav-link"><span class="material-icons">home</span></a>
@@ -150,7 +235,16 @@
     <a href="#" data-page="join" class="nav-link"><span class="material-icons">forum</span></a>
   </footer>
 
+  <!-- === Pop-up Notifikasi Download === -->
+  <div class="popup-notif" id="downloadPopup">
+    <span class="close-btn" id="closePopup">&times;</span>
+    <h3>🎉 Download Aplikasi Kami!</h3>
+    <p>Dapatkan versi aplikasinya langsung dari MediaFire.</p>
+    <a href="https://www.mediafire.com/file/xxxxxxx/app.apk" target="_blank" class="download-btn">Download</a>
+  </div>
+
   <script>
+    // === Navigasi ===
     const openMenu=document.getElementById('openMenu');
     const closeMenu=document.getElementById('closeMenu');
     const sideNav=document.getElementById('sideNav');
@@ -159,8 +253,8 @@
     const startBtn=document.getElementById('startBtn');
     const mainContent=document.getElementById('mainContent');
 
-    openMenu.addEventListener('click',()=>{sideNav.classList.add('open');sideNav.setAttribute('aria-hidden','false');});
-    closeMenu.addEventListener('click',()=>{sideNav.classList.remove('open');sideNav.setAttribute('aria-hidden','true');});
+    openMenu.addEventListener('click',()=>{sideNav.classList.add('open');});
+    closeMenu.addEventListener('click',()=>{sideNav.classList.remove('open');});
 
     function showPage(pageId){
       mainContent.style.opacity='0';
@@ -169,7 +263,6 @@
         const target=document.getElementById(pageId);
         if(target) target.classList.add('active');
         sideNav.classList.remove('open');
-        sideNav.setAttribute('aria-hidden','true');
         window.scrollTo({top:0,behavior:'smooth'});
         mainContent.style.opacity='1';
       },200);
@@ -186,19 +279,29 @@
     startBtn.addEventListener('click',()=>{
       showPage('game');
       setTimeout(()=>{
-        const el=document.getElementById('game');
-        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        document.getElementById('game').scrollIntoView({behavior:'smooth',block:'start'});
       },120);
     });
 
-    document.addEventListener('keydown',e=>{
-      if(e.key==='Escape'){
-        sideNav.classList.remove('open');
-        sideNav.setAttribute('aria-hidden','true');
-      }
+    // === Popup Download ===
+    document.addEventListener("DOMContentLoaded", function() {
+      const popup = document.getElementById("downloadPopup");
+      const closeBtn = document.getElementById("closePopup");
+      setTimeout(() => { popup.classList.add("show"); }, 3000);
+      closeBtn.addEventListener("click", () => popup.classList.remove("show"));
+      setTimeout(() => popup.classList.remove("show"), 11000);
     });
 
-    showPage('home');
+    // === Fitur Pencarian Game ===
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keyup', function() {
+      const filter = searchInput.value.toLowerCase();
+      const games = document.querySelectorAll('.game-item');
+      games.forEach(game => {
+        const title = game.querySelector('h3').textContent.toLowerCase();
+        game.style.display = title.includes(filter) ? '' : 'none';
+      });
+    });
   </script>
 </body>
 </html>
